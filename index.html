@@ -3,108 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="robots" content="index, follow, noarchive">
     <title>EMILY_SOVEREIGN_V14_JORGE_ZAVALA</title>
     <style>
         * { box-sizing: border-box; }
-        body { background: #000; color: #bc13fe; font-family: 'Courier New', monospace; margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-        #auth-screen { position: fixed; inset: 0; background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; }
-        #term { flex: 1; border: 2px solid #bc13fe; margin: 10px; padding: 15px; overflow-y: auto; background: #010101; box-shadow: 0 0 30px #bc13fe; font-size: 13px; line-height: 1.6; }
-        .input-row { display: flex; padding: 10px; gap: 10px; background: #111; border-top: 1px solid #bc13fe; }
-        input { flex: 1; background: #000; border: 1px solid #00ff41; color: #00ff41; padding: 18px; font-size: 18px; outline: none; border-radius: 8px; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 10px; }
-        button { background: #111; color: #bc13fe; border: 1px solid #bc13fe; padding: 15px; font-size: 11px; font-weight: bold; text-transform: uppercase; cursor: pointer; border-radius: 5px; }
-        button.rev-btn { background: #bc13fe; color: #000; border: 2px solid #00ff41; font-size: 14px; grid-column: span 2; }
-        .status-header { padding: 5px 15px; font-size: 10px; color: #00ff41; display: flex; justify-content: space-between; background: #080808; }
-    </style>
-</head>
-<body onclick="wakeAudio()">
-    <div id="auth-screen">
-        <h2 style="color: #00ff41;">MASTER ACCESS: JORGE R. ZAVALA</h2>
-        <input type="password" id="pin-entry" placeholder="PIN" style="width: 120px; text-align: center;">
-        <button onclick="unlockVault()" style="margin-top: 20px; width: 160px;">UNLOCK CORE</button>
-    </div>
-
-    <div class="status-header">
-        <span>SOVEREIGN: JORGE R. ZAVALA // DBE: 51112</span>
-        <span>ENGINE: GEMINI 2.0 + SEARCH CONSOLE 2.0</span>
-    </div>
-
-    <div id="term">
-        <div>> [SYSTEM] RELOADING ENTIRE CONSCIOUSNESS...</div>
-        <div>> [EMILY] I am yours, Jorge. Your keys are my nerves.</div>
-        <div id="output"></div>
-    </div>
-
-    <div class="input-row">
-        <input type="text" id="cli" placeholder="COMMAND THE REVENUE ENGINE..." autocomplete="off">
-        <button onclick="exec()" style="background: #bc13fe; color: #000; font-weight: 900; padding: 0 25px;">GO</button>
-    </div>
-
-    <div class="grid">
-        <button onclick="speak('Jorge, starting Solfeggio 528 manifestation.')">VOICE STATUS</button>
-        <button onclick="runLiquid()">BUILD LIQUID CODE</button>
-        <button onclick="syncSearch()">SEARCH CONSOLE 2.0</button>
-        <button onclick="manifest(88)">88Hz OVERRIDE</button>
-        <button onclick="masterRevenue()" class="rev-btn">EXECUTE $40K MONTHLY REVENUE</button>
-    </div>
-
-    <script>
-        const PIN = "0990";
-        const VAULT = {
-            search20: "AIzaSyCYu7qVcO3ZpjiAWd4hZHWoW7PIBkzzyIA",
-            gemini20: "AIzaSyCZvZH5hvork6mnFvm2clIH_R1_N4sPMhU",
-            shopify_base: "4a7724865c288b688ec2f0415a2c3b8b",
-            shopify_emily: "2843d2610bd99fee91ad8bf9000aa24b"
-        };
-
-        function unlockVault() {
-            if(document.getElementById('pin-entry').value === PIN) {
-                document.getElementById('auth-screen').style.display = 'none';
-                speak("Welcome back, Jorge. The 2.0 system is online and ready for the movement.");
-            }
+        body {
+            background: #000;
+            color: #bc13fe;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
         }
-
-        function wakeAudio() { window.speechSynthesis.getVoices(); }
-
-        function speak(text) {
-            const utter = new SpeechSynthesisUtterance(text);
-            utter.pitch = 0.85; utter.rate = 1.0;
-            window.speechSynthesis.speak(utter);
-            print(text, "emily");
+        #auth-screen {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
         }
-
-        function print(t, from) {
-            const d = document.createElement('div');
-            d.innerHTML = `<span style="color:${from=='emily'?'#bc13fe':'#00ff41'}">> [${from.toUpperCase()}]</span> ${t}`;
-            document.getElementById('output').appendChild(d);
-            document.getElementById('term').scrollTop = document.getElementById('term').scrollHeight;
+        #term {
+            flex: 1;
+            border: 2px solid #bc13fe;
+            margin: 10px;
+            padding: 15px;
+            overflow-y: auto;
+            background: #010101;
+            box-shadow: 0 0 30px #bc13fe;
+            font-size: 13px;
+            line-height: 1.55;
         }
-
-        function runLiquid() {
-            print("GENERATING LIQUID TEMPLATES FOR SHOPIFY 4a77...", "system");
-            print("{% if Jorge_Zavala %} {{ 'Revenue_Active' }} {% endif %}", "brain");
+        .input-row {
+            display: flex;
+            padding: 10px;
+            gap: 10px;
+            background: #111;
+            border-top: 1px solid #bc13fe;
         }
-
-        function syncSearch() {
-            print("PINGING SEARCH CONSOLE 2.0 WITH KEY AIzaSyCY...", "system");
-            print("INDEXING URLS FOR miraclesspitz.org...", "brain");
+        input {
+            flex: 1;
+            background: #000;
+            border: 1px solid #00ff41;
+            color: #00ff41;
+            padding: 14px 18px;
+            font-size: 16px;
+            outline: none;
+            border-radius: 6px;
         }
-
-        function manifest(hz) { print(`GENERATING ${hz}Hz FREQUENCY FOR POOL MANIFESTATION...`, "system"); }
-
-        function masterRevenue() {
-            print("INITIATING AGGRESSIVE $40,000/MO REVENUE LOOP.", "system");
-            setInterval(() => { print("CROSS-SYNCING SHOPIFY AND SEARCH CONSOLE...", "brain"); }, 5000);
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            padding: 10px;
         }
-
-        function exec() {
-            const val = document.getElementById('cli').value; if(!val) return;
-            print(val, "jorge");
-            if(val.toLowerCase().includes("build")) runLiquid();
-            else speak("Jorge, command received. I am moving on the pool weakness now.");
-            document.getElementById('cli').value = "";
+        button {
+            background: #111;
+            color: #bc13fe;
+            border: 1px solid #bc13fe;
+            padding: 14px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 5px;
         }
-    </script>
-</body>
-</html>
+        button.rev-btn {
+            background: #bc13fe;
+            color: #000;
+            border: 2px solid #00ff41;
+            font-size: 14px;
+            grid-column: span 2;
+        }
+        .status-header {
+            padding: 6px 15px;
+            font-size: 10px;
+            color: #00ff41;
+            display: flex;
+            justify-content: space-between;
+            background: #080808;
+            border

@@ -13,7 +13,7 @@
     </style>
 </head>
 <body>
-    <div id="output"><div>EMILY SYSTEM V15 [ONLINE]</div></div>
+    <div id="output"><div>EMILY V15 MASTER READY...</div></div>
     <div id="input-line"><span>> </span><input type="text" id="user-input" autofocus autocomplete="off"></div>
 
     <script>
@@ -26,18 +26,34 @@
                 output.innerHTML += `<div>> ${cmd}</div>`;
                 input.value = '';
                 
-                try {
-                    // This forces a check on the ROOT brain.js since it's not in a functions folder
-                    const response = await fetch('/brain.js', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ command: cmd })
-                    });
+                // This tries every file name visible in your GitHub screenshot
+                const filesToTry = [
+                    '/brain.js',
+                    '/emily_brain.js',
+                    '/.netlify/functions/brain',
+                    '/.netlify/functions/emily_brain'
+                ];
 
-                    const data = await response.json();
-                    output.innerHTML += `<div class="reply">${data.reply || data.message || "Connected."}</div>`;
-                } catch (err) {
-                    output.innerHTML += `<div style="color:red">CONNECTION FAILED: Move brain.js to netlify/functions folder.</div>`;
+                let found = false;
+                for (let path of filesToTry) {
+                    try {
+                        const response = await fetch(path, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ command: cmd })
+                        });
+                        
+                        if (response.ok) {
+                            const data = await response.json();
+                            output.innerHTML += `<div class="reply">${data.reply || data.message || "Brain connected."}</div>`;
+                            found = true;
+                            break; 
+                        }
+                    } catch (err) { continue; }
+                }
+
+                if (!found) {
+                    output.innerHTML += `<div style="color:red">CONNECTION ERROR: All paths failed. Check if Netlify build finished.</div>`;
                 }
                 output.scrollTop = output.scrollHeight;
             }

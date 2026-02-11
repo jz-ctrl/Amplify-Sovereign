@@ -1,6 +1,8 @@
 [build]
-  command = "python Emily.py"
+  command = "pip install -r requirements.txt && python3 Emily.py"
   publish = "."
 
-[dev]
-  port = 8080
+[build.environment]
+  PYTHON_VERSION = "3.10"
+  ADA_OVERRIDE = "TRUE"
+  CHROME_HEADLESS_88 = "ENABLED"

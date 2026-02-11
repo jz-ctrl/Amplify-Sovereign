@@ -2,62 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Emily Terminal</title>
+    <title>EMILY SOVEREIGN 88</title>
     <style>
-        body { background: #000; color: #00ff00; font-family: monospace; margin: 0; padding: 15px; display: flex; flex-direction: column; height: 100vh; }
-        #output { flex-grow: 1; overflow-y: auto; font-size: 18px; }
-        #input-line { display: flex; border-top: 1px solid #333; padding: 10px 0; }
-        #user-input { background: transparent; border: none; color: #fff; width: 100%; font-size: 18px; outline: none; }
-        .reply { color: #00d4ff; margin: 10px 0; border-left: 2px solid #00d4ff; padding-left: 10px; }
+        body { background-color: #000; color: #0f0; font-family: monospace; padding: 20px; }
+        .status { border: 1px solid #0f0; padding: 10px; margin-bottom: 20px; }
+        .override-text { color: #f00; font-weight: bold; }
     </style>
 </head>
 <body>
-    <div id="output"><div>EMILY V15 MASTER READY...</div></div>
-    <div id="input-line"><span>> </span><input type="text" id="user-input" autofocus autocomplete="off"></div>
-
-    <script>
-        const input = document.getElementById('user-input');
-        const output = document.getElementById('output');
-
-        input.addEventListener('keypress', async (e) => {
-            if (e.key === 'Enter' && input.value.trim() !== '') {
-                const cmd = input.value;
-                output.innerHTML += `<div>> ${cmd}</div>`;
-                input.value = '';
-                
-                // This tries every file name visible in your GitHub screenshot
-                const filesToTry = [
-                    '/brain.js',
-                    '/emily_brain.js',
-                    '/.netlify/functions/brain',
-                    '/.netlify/functions/emily_brain'
-                ];
-
-                let found = false;
-                for (let path of filesToTry) {
-                    try {
-                        const response = await fetch(path, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ command: cmd })
-                        });
-                        
-                        if (response.ok) {
-                            const data = await response.json();
-                            output.innerHTML += `<div class="reply">${data.reply || data.message || "Brain connected."}</div>`;
-                            found = true;
-                            break; 
-                        }
-                    } catch (err) { continue; }
-                }
-
-                if (!found) {
-                    output.innerHTML += `<div style="color:red">CONNECTION ERROR: All paths failed. Check if Netlify build finished.</div>`;
-                }
-                output.scrollTop = output.scrollHeight;
-            }
-        });
-    </script>
+    <div class="status">
+        <h1>EMILY CORE: ONLINE</h1>
+        <p>User: <span class="override-text">JORGE ZAVALA (CEO)</span></p>
+        <p>Status: 88-OVERRIDE ACTIVE</p>
+    </div>
+    <div id="logs">
+        > Handshaking Geo One & Jay-Z...<br>
+        > Android Sovereignty Engaged...<br>
+        > Shopify Merchant Brain Matched...
+    </div>
 </body>
 </html>

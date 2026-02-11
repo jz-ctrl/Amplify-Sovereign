@@ -1,8 +1,6 @@
 [build]
-  command = "pip install -r requirements.txt && python3 Emily.py"
   publish = "."
+  command = "python3 Emily.py"
 
 [build.environment]
   PYTHON_VERSION = "3.10"
-  ADA_OVERRIDE = "TRUE"
-  CHROME_HEADLESS_88 = "ENABLED"

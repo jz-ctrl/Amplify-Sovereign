@@ -1,0 +1,6 @@
+[build]
+  command = "python Emily.py"
+  publish = "."
+
+[dev]
+  port = 8080

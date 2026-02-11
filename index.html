@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <html>
-<head><title>EMILY SOVEREIGN 88</title></head>
-<body style="background:black; color:lime; font-family:monospace; padding:30px;">
-    <h1>88-OVERRIDE: ENGAGED</h1>
-    <p>AUTHORIZATION: JORGE ZAVALA (CEO)</p>
-    <hr>
-    <p>ENTITY: ShowRoom Doctor Z / Amplify Accessibility</p>
-    <p>DUNS: 96-9633754 | EIN: 99-3298727</p>
-    <hr>
-    <p>> STATUS: LIVE & STABLE</p>
+<head>
+    <title>EMILY SOVEREIGN</title>
+    <style>
+        body { background: #000; color: #0f0; font-family: monospace; padding: 20px; }
+        #terminal { border: 1px solid #0f0; height: 300px; padding: 15px; overflow-y: auto; }
+        .input-line { display: flex; margin-top: 10px; }
+        input { background: transparent; border: none; color: #0f0; outline: none; width: 100%; font-family: monospace; }
+    </style>
+</head>
+<body>
+    <div id="terminal">> EMILY SOVEREIGN: READY FOR COMMAND...</div>
+    <div class="input-line">
+        <span>>&nbsp;</span>
+        <input type="text" id="cmd-input" autofocus onkeydown="if(event.key==='Enter') executeCommand(this.value)">
+    </div>
+
+    <script src="brain.js"></script>
 </body>
 </html>

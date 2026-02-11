@@ -1,8 +1,10 @@
 flask
-google-cloud-vertexai
-google-cloud-vision
-shopify-api-node
+google-cloud-aiplatform
+shopifyapi
 python-dotenv
-requests
-pybluez2
 opencv-python-headless
+pybluez2
+pure-python-adb
+selenium
+webdriver-manager
+requests

@@ -1,29 +1,26 @@
-/* EMILY SOVEREIGN - brain.js */
-const sovereignData = {
-    ceo: "Jorge Zavala",
-    biz: "ShowRoom Doctor Z / Amplify Accessibility",
-    duns: "96-9633754",
-    ein: "99-3298727",
-    address: "1004 San Jose Ave. Suite 101, Clovis, CA 93612"
-};
+/* EMILY SOVEREIGN - COMMAND CENTER */
+const biz = { name: "Amplify Accessibility", ceo: "Jorge Zavala" };
 
-function runTerminal() {
-    const screen = document.getElementById('output');
+function executeCommand(cmd) {
+    const term = document.getElementById('terminal');
+    const input = document.getElementById('cmd-input');
     
-    // Injecting the Sovereign Core Logic
-    screen.innerHTML = `
-        > 88-OVERRIDE: ENGAGED<br>
-        > CEO: ${sovereignData.ceo}<br>
-        > ENTITY: ${sovereignData.biz}<br>
-        > DUNS: ${sovereignData.duns}<br>
-        > EIN: ${sovereignData.ein}<br>
-        > LOCATION: ${sovereignData.address}<br>
-        <hr style="border:1px solid #333">
-        > JARVIS PROTOCOL: ACTIVE<br>
-        > STANDBY FOR SIR'S COMMAND...
-    `;
-    console.log("Sovereign Brain Sync: 100%");
+    term.innerHTML += `<br><span style="color:white">> ${cmd}</span>`;
+    
+    // Command Recognition Logic
+    if(cmd.toLowerCase().includes("status")) {
+        term.innerHTML += `<br>> 88-OVERRIDE: STABLE. CEO AUTHORIZED.`;
+    } else if(cmd.toLowerCase().includes("spritz")) {
+        term.innerHTML += `<br>> MIRACLE SPRITZ pH: 4.6 (TARGET MATCHED)`;
+    } else {
+        term.innerHTML += `<br>> EXECUTING: ${cmd.toUpperCase()}... SUCCESS.`;
+    }
+    
+    input.value = ""; // Clear input
+    term.scrollTop = term.scrollHeight; // Auto-scroll
 }
 
-// Trigger the brain when the page loads
-window.onload = runTerminal;
+// SPRITE AUTOMATION
+setInterval(() => {
+    console.log("Automation Heartbeat: " + biz.name);
+}, 5000);

@@ -1,26 +1,37 @@
-/* EMILY SOVEREIGN - COMMAND CENTER */
-const biz = { name: "Amplify Accessibility", ceo: "Jorge Zavala" };
+/* EMILY SOVEREIGN - BRAIN AUTOMATION CORE */
+const bizData = {
+    ceo: "JORGE ZAVALA",
+    duns: "96-9633754",
+    ein: "99-3298727",
+    formula: "pH 4.6 (MIRACLE SPRITZ)"
+};
 
-function executeCommand(cmd) {
-    const term = document.getElementById('terminal');
-    const input = document.getElementById('cmd-input');
+const statusCycle = [
+    "88-OVERRIDE: ENGAGED",
+    "AUTOMATION: RUNNING",
+    "SCANNING BIO-FREQUENCIES...",
+    "AMPLIFY ACCESSIBILITY: ACTIVE",
+    "JARVIS PROTOCOL: ONLINE"
+];
+
+let cycleIndex = 0;
+
+function runSovereignLoop() {
+    const screen = document.getElementById('terminal');
     
-    term.innerHTML += `<br><span style="color:white">> ${cmd}</span>`;
-    
-    // Command Recognition Logic
-    if(cmd.toLowerCase().includes("status")) {
-        term.innerHTML += `<br>> 88-OVERRIDE: STABLE. CEO AUTHORIZED.`;
-    } else if(cmd.toLowerCase().includes("spritz")) {
-        term.innerHTML += `<br>> MIRACLE SPRITZ pH: 4.6 (TARGET MATCHED)`;
-    } else {
-        term.innerHTML += `<br>> EXECUTING: ${cmd.toUpperCase()}... SUCCESS.`;
-    }
-    
-    input.value = ""; // Clear input
-    term.scrollTop = term.scrollHeight; // Auto-scroll
+    // This loop updates the screen automatically
+    setInterval(() => {
+        screen.innerHTML = `
+            <div style="color:red; font-weight:bold;">> CEO AUTHORIZED: ${bizData.ceo}</div>
+            <div style="color:lime;">> STATUS: ${statusCycle[cycleIndex]}</div>
+            <hr style="border:0.5px solid #222;">
+            <div style="color:cyan;">> FORMULA: ${bizData.formula}</div>
+            <div style="color:yellow;">> DUNS: ${bizData.duns} | EIN: ${bizData.ein}</div>
+        `;
+        
+        cycleIndex = (cycleIndex + 1) % statusCycle.length;
+    }, 3000); // 3 seconds per cycle
 }
 
-// SPRITE AUTOMATION
-setInterval(() => {
-    console.log("Automation Heartbeat: " + biz.name);
-}, 5000);
+// Wake up the brain
+window.onload = runSovereignLoop;

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMILY SOVEREIGN | JORGE R. ZAVALA</title>
+    <style>
+        body { background: #000; color: #0f0; font-family: 'Courier New', monospace; padding: 20px; margin: 0; }
+        #terminal { border: 1px solid #0f0; height: 400px; padding: 15px; overflow-y: auto; background: #050505; box-shadow: inset 0 0 10px #0f0; }
+        .input-line { display: flex; margin-top: 15px; border-top: 1px solid #222; padding-top: 10px; }
+        input { background: transparent; border: none; color: #fff; outline: none; width: 100%; font-family: 'Courier New', monospace; font-size: 1.1rem; }
+        .reply-text { color: #00d4ff; margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <div id="terminal">> EMILY SOVEREIGN V4.0: JORGE R. ZAVALA AUTHORIZED...<br>> SYSTEM: AMPLIFY ACCESSIBILITY BYPASS ONLINE...</div>
+    <div class="input-line">
+        <span>>&nbsp;</span>
+        <input type="text" id="cmd-input" autofocus onkeydown="if(event.key==='Enter') executeCommand(this.value)">
+    </div>
+
+    <script>
+        async function executeCommand(cmd) {
+            const terminal = document.getElementById('terminal');
+            const input = document.getElementById('cmd-input');
+            
+            // Log user command
+            terminal.innerHTML += `<div><span style="color:#888;">> ${cmd}</span></div>`;
+            input.value = '';
+
+            try {
+                // Pointing to the new Netlify location
+                const response = await fetch('/.netlify/functions/brain', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ command: cmd })
+                });
+
+                const data = await response.json();
+                terminal.innerHTML += `<div class="reply-text">${data.reply}</div>`;
+            } catch (err) {
+                terminal.innerHTML += `<div style="color:red;">> ERROR: ENSURE NETLIFY/FUNCTIONS/BRAIN.JS IS DEPLOYED.</div>`;
+            }
+            
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+    </script>
+    <script src="brain.js"></script> 
+</body>
+</html>

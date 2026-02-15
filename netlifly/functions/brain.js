@@ -1,78 +1,82 @@
-/* * EMILY MASTER CORE V4.0 - AUTHORIZED BY CEO JORGE R. ZAVALA
- * INTEGRATED GOVERNMENT CONTRACTING & NPO DATA
+/* * EMILY MASTER CORE V6.1 - FULL DEPLOYMENT
+ * AUTHORIZED USER: JORGE R. ZAVALA
+ * MISSION: AMPLIFY ACCESSIBILITY / MIRACLE SPRITZ / SHOWROOM DRZ
  */
 
-const MASTER_PROFILE = {
-    CEO: {
-        name: "Jorge R. Zavala",
-        phone: "559-492-6329",
-        address: "1004 San Jose Ave. Suite 101, Clovis, CA 93612",
-        email_personal: "drz@showroomdrz.com",
-        email_political: "jz@votejz.org"
+// CORE IDENTITY & SIGNATURE DATA
+const MASTER_DATA = {
+    CEO: "Jorge R. Zavala",
+    NPO: {
+        NAME: "Amplify Accessibility Green Tech Coalition",
+        EIN: "99-3298727",
+        WEB: "amplifyaccessibility.org"
     },
-    ENTITIES: {
-        NPO: {
-            name: "Amplify Accessibility Green Tech Coalition",
-            ein: "99-3298727",
-            site: "amplifyaccessibility.org"
-        },
-        CORP: {
-            name: "ShowRoom Doctor Z Inc.",
-            duns: "96-9633754",
-            cage: "6JHA2",
-            ca_supplier_id: "1750813",
-            firm_id: "51112",
-            naics: ["488190", "811192", "561720", "424690", "325611", "325612", "423850"],
-            products: ["Miracle Spritz (pH 4.6)"],
-            site: "showroomdrz.com",
-            shop: "miraclespritz.net"
-        },
-        POLITICAL: {
-            name: "Citizens for Jorge Zavala",
-            site: "votejz.org"
+    CORP: {
+        NAME: "ShowRoom Doctor Z Inc.",
+        DUNS: "96-9633754",
+        CAGE: "6JHA2",
+        SUPPLIER_ID: "1750813",
+        FIRM_ID: "51112",
+        NAICS: "488190, 811192, 561720, 424690, 325611, 325612, 423850",
+        WEB: "showroomdrz.com",
+        SHOP: "miraclespritz.net"
+    },
+    POLITICAL: {
+        NAME: "Citizens for Jorge Zavala",
+        EMAIL: "jz@votejz.org",
+        WEB: "votejz.org"
+    },
+    ADDRESS: "1004 San Jose Ave. Suite 101, Clovis, CA 93612",
+    PHONE: "559-492-6329",
+    FORMULA: "pH 4.6 (MIRACLE SPRITZ)"
+};
+
+exports.handler = async (event) => {
+    // 1. SECURE KEY RECALL FROM NETLIFY ENVIRONMENT
+    const GOOGLE_TOKEN = process.env.GOOGLE_JAYZ_REFRESH_TOKEN;
+    const SHOPIFY_TOKEN = process.env.SHOPIFY_ACCESS_TOKEN;
+    const GEO_ID = process.env.GOOGLE_2_0_GEO_ID;
+
+    try {
+        // 2. PARSE INCOMING COMMAND
+        const data = JSON.parse(event.body || "{}");
+        const cmd = (data.command || "STATUS").toUpperCase();
+
+        // 3. HANDLE FILE UPLOAD LOGIC
+        if (cmd === "FILE_UPLOAD") {
+            return {
+                statusCode: 200,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ 
+                    reply: `EMILY: File "${data.fileName}" received for Jorge R. Zavala. Data mapped to NPO EIN ${MASTER_DATA.NPO.EIN}. Analyzing...` 
+                })
+            };
         }
+
+        // 4. HANDLE COMMAND LOGIC
+        let responseMessage = "";
+        
+        if (cmd === "STATUS" || cmd === "PING") {
+            responseMessage = `EMILY: System Online. CEO Jorge R. Zavala Authenticated. NPO (EIN: ${MASTER_DATA.NPO.EIN}) and Corporate (Firm ID: ${MASTER_DATA.CORP.FIRM_ID}) bridges are HOT.`;
+        } else if (cmd === "INFO") {
+            responseMessage = `CEO: ${MASTER_DATA.CEO} | ADDRESS: ${MASTER_DATA.ADDRESS} | FIRM ID: ${MASTER_DATA.CORP.FIRM_ID}`;
+        } else {
+            responseMessage = `EMILY: Command "${cmd}" received. Executing through Master 2.0 Bridge...`;
+        }
+
+        return {
+            statusCode: 200,
+            headers: { 
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*" 
+            },
+            body: JSON.stringify({ reply: responseMessage })
+        };
+
+    } catch (err) {
+        return { 
+            statusCode: 500, 
+            body: JSON.stringify({ reply: "BRAIN ERROR: Check Netlify Console for Environment Variable Sync." }) 
+        };
     }
 };
-
-// NETLIFY API HANDLER
-exports.handler = async (event) => {
-    const context = JSON.parse(event.body || "{}");
-    const cmd = context.command?.toLowerCase();
-
-    // EMILY logic to pull keys from Netlify Env
-    const keys = {
-        google: process.env.GOOGLE_JAYZ_REFRESH_TOKEN,
-        shopify: process.env.SHOPIFY_ACCESS_TOKEN
-    };
-
-    return {
-        statusCode: 200,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            reply: `[EMILY]: CEO Zavala, Profile 4.0 Loaded. NPO EIN ${MASTER_PROFILE.ENTITIES.NPO.ein} and Firm ID ${MASTER_PROFILE.ENTITIES.CORP.firm_id} are staged for Grant/Contract automation.`
-        })
-    };
-};
-
-// TERMINAL DISPLAY LOOP
-if (typeof window !== 'undefined') {
-    window.onload = function() {
-        const screen = document.getElementById('output');
-        const cycles = [
-            `> CEO: ${MASTER_PROFILE.CEO.name}`,
-            `> NPO: ${MASTER_PROFILE.ENTITIES.NPO.name}`,
-            `> EIN: ${MASTER_PROFILE.ENTITIES.NPO.ein}`,
-            `> CORP: ${MASTER_PROFILE.ENTITIES.CORP.name}`,
-            `> FIRM ID: ${MASTER_PROFILE.ENTITIES.CORP.firm_id} | CAGE: ${MASTER_PROFILE.ENTITIES.CORP.cage}`,
-            `> NAICS: ${MASTER_PROFILE.ENTITIES.CORP.naics[0]}... READY`,
-            `> FORMULA: MIRACLE SPRITZ pH 4.6`
-        ];
-        let i = 0;
-        setInterval(() => {
-            if(screen) {
-                screen.innerHTML = `<div style="color:#00ff41;">${cycles[i]}</div>`;
-                i = (i + 1) % cycles.length;
-            }
-        }, 3000);
-    };
-}

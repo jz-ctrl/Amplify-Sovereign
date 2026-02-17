@@ -1,38 +1,30 @@
-name: G1 PRODUCTION MASTER SYNC
-on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 * * * *'
+name: Shopify Theme Sync
 
-env:
-  # Verified GEO1 Project Identifier
-  GEO1_PROJECT_ID: '181014607001'
-  SHOPIFY_STORE: 'miraclespritz.net'
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+      - 'index.html'
+      - 'index.js'
 
 jobs:
-  production_sync:
+  deploy:
+    name: Sync to Shopify Store
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: G1 Auth Handshake
-        run: |
-          echo "Authorizing GEO1 Master Node: ${{ env.GEO1_PROJECT_ID }}"
-          # Explicitly setting the project to GEO1 (G1)
-          gcloud config set project ${{ env.GEO1_PROJECT_ID }}
+      - name: Shopify Theme CLI
+        uses: shopify/theme-action@v3
+        with:
+          shopify_store_url: ${{ secrets.SHOPIFY_STORE_URL }}
+          shopify_password: ${{ secrets.SHOPIFY_PASSWORD }}
+          theme_id: ${{ secrets.SHOPIFY_THEME_ID }}
+          path: ./
+          allow_live: true
 
-      - name: Pull Shopify Orders (Production)
-        run: |
-          echo "Executing G1 Direct Pull for ${{ env.SHOPIFY_STORE }}..."
-          # Pulling real-time data using the Production Access Token
-          curl -X GET "https://${{ env.SHOPIFY_STORE }}/admin/api/2026-01/orders.json?status=any" \
-          -H "X-Shopify-Access-Token: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}" > production_orders.json
-
-      - name: Log Data to GEO1 Dashboard
-        run: |
-          git config --global user.name "EMILY-G1-Bot"
-          git config --global user.email "emily@amplifyaccessibility.org"
-          git add production_orders.json
-          git commit -m "G1: Production Sales Audit - Verified GEO1 [$(date)]" || echo "No new sales"
-          git push
+      - name: Post-Sync Notification
+        run: echo "Deployment to Shopify complete. Terminal synced."

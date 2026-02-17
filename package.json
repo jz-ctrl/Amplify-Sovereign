@@ -1,0 +1,16 @@
+{
+  "name": "amplify-accessibility-engine",
+  "version": "1.0.0",
+  "description": "Neural Engine for Miracle Spritz and AAGTC",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "brain.js": "^2.0.0-beta.23",
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}

@@ -1,11 +1,13 @@
-const GITHUB_TOKEN = process.env.GH_TOKEN;
-const SHOPIFY_KEY = process.env.SHOPIFY_API_KEY;
-
-// Log initialization for terminal confirmation
-console.log("BRAIN INITIALIZED");
-
-// Exporting variables for the Netlify functions to consume
+// brain.js - MASTER 2.0 CONFIGURATION
 module.exports = {
-    GITHUB_TOKEN,
-    SHOPIFY_KEY
+  // GOOGLE MASTER 2.0
+  GEO_ID: process.env.GOOGLE_2_0_GEO_ID,
+  JAYZ_CLIENT_ID: process.env.GOOGLE_JAYZ_CLIENT_ID,
+  JAYZ_CLIENT_SECRET: process.env.GOOGLE_JAYZ_CLIENT_SECRET,
+  JAYZ_REFRESH_TOKEN: process.env.GOOGLE_JAYZ_REFRESH_TOKEN,
+
+  // SHOPIFY PRODUCTION
+  SHOPIFY_API_KEY: process.env.SHOPIFY_API_KEY,
+  SHOPIFY_SECRET: process.env.SHOPIFY_SECRET,
+  SHOPIFY_ACCESS_TOKEN: process.env.SHOPIFY_ACCESS_TOKEN
 };

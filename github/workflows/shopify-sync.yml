@@ -1,38 +1,28 @@
-name: EMILY Master Shopify Sync
+name: G1 PRODUCTION MASTER SYNC
 on:
+  workflow_dispatch:
   schedule:
-    - cron: '0 * * * *' # Constant background sync
-  workflow_dispatch: # Manual trigger
-
-env:
-  SHOPIFY_STORE_URL: 'miraclespritz.net'
-  SHOPIFY_API_VERSION: '2026-01'
-  # Explicitly defining full scopes for Orders, SEO, and Inventory
-  FULL_SCOPES: 'read_orders,write_orders,read_products,write_products,read_inventory,write_inventory,read_content,write_content'
+    - cron: '0 * * * *'
 
 jobs:
-  shopify_sync:
+  production_sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Execute Full-Access Sync
+      - name: G1 Auth Handshake
         run: |
-          echo "Initiating EMILY Master Protocol for miraclespritz.net..."
-          
-          # Pulling the real sales data you need right now
-          curl -X GET "https://${{ env.SHOPIFY_STORE_URL }}/admin/api/${{ env.SHOPIFY_API_VERSION }}/orders.json?status=any&limit=50" \
-          -H "X-Shopify-Access-Token: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}" > latest_orders.json
-          
-          # Auditing the pH 4.6 formula inventory and SEO tags
-          curl -X GET "https://${{ env.SHOPIFY_STORE_URL }}/admin/api/${{ env.SHOPIFY_API_VERSION }}/products.json" \
-          -H "X-Shopify-Access-Token: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}" > product_audit.json
+          echo "Authorizing G1 Master Node: 181014607001"
+          # Using the GEO_ID for project context
+          gcloud config set project emilyseo
 
-      - name: Log Data to GEO1 Bridge
+      - name: Pull Shopify Orders (Production)
         run: |
-          git config --global user.name "EMILY-Bot"
-          git config --global user.email "emily@amplifyaccessibility.org"
-          git add latest_orders.json product_audit.json
-          git commit -m "EMILY: Verified Sync - miraclespritz.net [$(date)]" || echo "No changes"
+          # Pulling the real data from miraclespritz.net
+          curl -X GET "https://miraclespritz.net/admin/api/2026-01/orders.json?status=any" \
+          -H "X-Shopify-Access-Token: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}" > production_orders.json
+
+      - name: Log to G1 Dashboard
+        run: |
+          git config --global user.name "EMILY-G1-Bot"
+          git add production_orders.json
+          git commit -m "G1: Production Sales Audit [$(date)]" || echo "No new sales"
           git push

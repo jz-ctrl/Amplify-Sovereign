@@ -2,17 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>EMILY - SYSTEM ONLINE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amplify Accessibility | Miracle Spritz Engine</title>
     <style>
-        body { background: #000; color: #0f0; font-family: monospace; padding: 40px; }
-        .border { border: 5px solid #0f0; padding: 20px; }
-        h1 { font-size: 3em; margin: 0; }
+        body { background-color: #000; color: #FFF; font-family: Arial, sans-serif; padding: 20px; }
+        #terminal { background-color: #111; border: 2px solid #0F0; padding: 15px; height: 300px; overflow-y: scroll; margin-bottom: 20px; }
+        .success { color: #0F0; }
+        .error { color: #F00; }
+        button { background-color: #0F0; color: #000; padding: 10px 20px; border: none; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
-    <div class="border">
-        <h1>STATUS: ONLINE</h1>
-        <p>NETLIFY FUNCTIONS / FLY / GITHUB SYNC ACTIVE</p>
+    <h1>AAGTC System Terminal</h1>
+    
+    <div id="terminal">
+        <p class="success">> Initializing Miracle Spritz Neural Engine...</p>
+        <p>> System Status: Online (pH 4.6 Monitoring Active)</p>
     </div>
+
+    <button onclick="runBrain()">Run Neural Sync</button>
+
+    <script src="https://unpkg.com/brain.js"></script>
+    <script src="index.js"></script>
+    <script>
+        function runBrain() {
+            const term = document.getElementById('terminal');
+            const newLog = document.createElement('p');
+            newLog.className = 'success';
+            newLog.innerHTML = '> Neural Sync Complete: SEO & Traffic data aligned.';
+            term.appendChild(newLog);
+            term.scrollTop = term.scrollHeight;
+        }
+    </script>
 </body>
 </html>

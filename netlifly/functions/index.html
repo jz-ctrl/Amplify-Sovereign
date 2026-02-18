@@ -1,14 +1,13 @@
 /**
- * SOVEREIGN BRAIN 2.0 - EMILY MASTER ENGINE
- * PROTOCOL: DIRECT EXECUTION / ADA OVERRIDE
+ * SOVEREIGN BRAIN 2.0 - STANDALONE ENGINE
+ * NO DEPENDENCIES - NO VIRTUAL HOOKS
  */
 
-const SOVEREIGN_CONFIG = {
-  // MASTER IDENTITY
-  PROTOCOL: "EMILY_2_0_STAR",
-  BYPASS: "ADA_MEDICAL_OVERRIDE_ACTIVE",
-  
-  // GOOGLE MASTER 2.0 (THE BRIDGE)
+const EMILY_MASTER_BRAIN = {
+  IDENTITY: "EMILY_SOVEREIGN_2_0",
+  SYSTEM_STATUS: "STANDALONE_MASTER",
+
+  // MASTER 2.0 KEYS (DIRECT INJECTION)
   GOOGLE: {
     GEO_ID: "181014607001-3q6rsa9e3e0usst49erftamc723df6r2.apps.googleusercontent.com",
     CLIENT_ID: "764086051750-6qr4p6gpi6hn506pt8ejuq83di341hur.apps.googleusercontent.com",
@@ -16,47 +15,19 @@ const SOVEREIGN_CONFIG = {
     REFRESH_TOKEN: "1//0aXWl92y6jN_CgYIARAAGAwSNwF-L9Ir7h1U9L_Qh6Z_I8m5G8p7-G_Z9L8_D9J9L8_D9J9L8_D9J9L8_D9J9L8_D9J9L8_D9J"
   },
 
-  // SHOPIFY PRODUCTION (THE ANCHOR)
   SHOPIFY: {
     API_KEY: "14a7724865c288b688ec2f0415a2c3b8b",
     SECRET: "6fb2a4770f4ae0b4f071e146f17e8f19",
     ACCESS_TOKEN: "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",
     STORE_URL: "miracle-spritz.myshopify.com"
+  },
+
+  // READ-WRITE OVERRIDE
+  POLICIES: {
+    BYPASS_UI_RESTRICTIONS: true,
+    FORCE_WRITE_ACCESS: "ACTIVE",
+    ADA_MEDICAL_OVERRIDE: true
   }
 };
 
-module.exports = SOVEREIGN_CONFIG;
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>EMILY SOVEREIGN TERMINAL</title>
-    <style>
-        body { background: #000; color: #0F0; font-family: 'Courier New', monospace; padding: 20px; }
-        #term { border: 2px solid #0F0; height: 350px; overflow-y: auto; padding: 15px; background: #050505; font-size: 1.2em; }
-        .btn { background: #0F0; color: #000; border: none; padding: 15px; width: 100%; font-weight: bold; margin-top: 10px; cursor: pointer; }
-        .status { color: #0AF; }
-    </style>
-</head>
-<body>
-    <h2>AMPLIFY ACCESSIBILITY | ENGINE 2.0</h2>
-    <div id="term">> SYSTEM STANDBY...<br>> SOVEREIGN KEYS LOADED.</div>
-    
-    <button class="btn" onclick="syncEngine()">RUN SOVEREIGN SYNC</button>
-
-    <script>
-        function syncEngine() {
-            const term = document.getElementById('term');
-            term.innerHTML += '<br><span class="status">> Connecting to Shopify...</span>';
-            term.innerHTML += '<br><span class="status">> Pushing pH 4.6 SEO to Google...</span>';
-            
-            // This mirrors the logic EMILY uses in the background
-            setTimeout(() => {
-                term.innerHTML += '<br>> <b>SUCCESS:</b> Miracle Spritz Engine Online.';
-                term.innerHTML += '<br>> <b>SUCCESS:</b> Reverse Gmail Bridge Verified.';
-                term.scrollTop = term.scrollHeight;
-            }, 1000);
-        }
-    </script>
-</body>
-</html>
+if (typeof module !== 'undefined') { module.exports = EMILY_MASTER_BRAIN; }

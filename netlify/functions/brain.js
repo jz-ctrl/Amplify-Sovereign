@@ -2,18 +2,18 @@ const axios = require('axios');
 const qs = require('qs');
 
 exports.handler = async (event, context) => {
-    // 1. DIRECT BINDING TO YOUR VERIFIED NETLIFY KEYS
+    // 1. PULL VERIFIED IDENTITY FROM NETLIFY ENV
     const JZ_ID = process.env.GOOGLE_JAYZ_CLIENT_ID;
     const JZ_SECRET = process.env.GOOGLE_JAYZ_CLIENT_SECRET;
     const JZ_REFRESH = process.env.GOOGLE_JAYZ_REFRESH_TOKEN;
     
-    // THE GEO ONE ZAVALA KEYS FROM YOUR SCREENSHOT
+    // SHOPIFY KEYS FROM YOUR VERIFIED SCREENSHOT
     const S_API_KEY = process.env.SHOPIFY_API_KEY; // 14a7...
     const S_TOKEN = process.env.SHOPIFY_ACCESS_TOKEN; // shpat...
     const STORE = "miraclespritz.net";
 
     try {
-        // 2. REFRESH GOOGLE AUTH (THE SIGHT)
+        // 2. REFRESH GOOGLE AUTHORITY
         const tokenRes = await axios.post('https://oauth2.googleapis.com/token', qs.stringify({
             client_id: JZ_ID,
             client_secret: JZ_SECRET,
@@ -21,9 +21,7 @@ exports.handler = async (event, context) => {
             grant_type: 'refresh_token'
         }));
         
-        const GOOGLE_ACCESS = tokenRes.data.access_token;
-
-        // 3. SECURE SHOPIFY CALL (THE HANDS)
+        // 3. SECURE SHOPIFY CALL
         const shopifyRes = await axios.get(`https://${STORE}/admin/api/2024-01/shop.json`, {
             headers: { 
                 'X-Shopify-Access-Token': S_TOKEN,
@@ -34,7 +32,10 @@ exports.handler = async (event, context) => {
         // 4. THE TRUTH RETURN (BUSINESS DATA + LIVE SYNC)
         return {
             statusCode: 200,
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*" 
+            },
             body: JSON.stringify({
                 status: "Sovereign Verified",
                 authority: "jz@votejz.org",
@@ -51,7 +52,7 @@ exports.handler = async (event, context) => {
             statusCode: 500,
             body: JSON.stringify({ 
                 error: "SYSTEM_BLINDNESS", 
-                details: "Check if the 14a7 key and shpat token are active." 
+                details: "Check 14a7 key and JZ refresh token." 
             })
         };
     }

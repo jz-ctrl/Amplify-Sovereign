@@ -7,7 +7,7 @@ exports.handler = async (event, context) => {
     const JZ_SECRET = process.env.GOOGLE_JAYZ_CLIENT_SECRET;
     const JZ_REFRESH = process.env.GOOGLE_JAYZ_REFRESH_TOKEN;
     
-    // THE KEYS FROM YOUR SCREENSHOT
+    // THE GEO ONE ZAVALA KEYS FROM YOUR SCREENSHOT
     const S_API_KEY = process.env.SHOPIFY_API_KEY; // 14a7...
     const S_TOKEN = process.env.SHOPIFY_ACCESS_TOKEN; // shpat...
     const STORE = "miraclespritz.net";
@@ -31,16 +31,18 @@ exports.handler = async (event, context) => {
             }
         });
 
-        // 4. THE TRUTH RETURN (ONLY LIVE DATA)
+        // 4. THE TRUTH RETURN (BUSINESS DATA + LIVE SYNC)
         return {
             statusCode: 200,
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 status: "Sovereign Verified",
                 authority: "jz@votejz.org",
+                owner: "Geo One Zavala",
                 store_name: shopifyRes.data.shop.name,
                 npo: "Amplify Accessibility Green Tech Coalition",
-                biz_ids: { ein: "99-3298727", duns: "96-9633754" },
+                ein: "99-3298727",
+                duns: "96-9633754",
                 timestamp: new Date().toISOString()
             })
         };
@@ -49,7 +51,7 @@ exports.handler = async (event, context) => {
             statusCode: 500,
             body: JSON.stringify({ 
                 error: "SYSTEM_BLINDNESS", 
-                details: "Check if the 14a7 key and shpat token are active in Shopify Partner Dashboard." 
+                details: "Check if the 14a7 key and shpat token are active." 
             })
         };
     }

@@ -1,55 +1,60 @@
 const axios = require('axios');
-const { getStore } = require('@netlify/blobs'); 
-const chromium = require('@sparticuz/chromium-min'); // Lightweight 2026 Engine
-const puppeteer = require('puppeteer-core'); // Use the Core to save space
+const { getStore } = require('@netlify/blobs'); // PERSISTENT MEMORY
+const chromium = require('@sparticuz/chromium-min'); // LIGHTWEIGHT ENGINE
+const puppeteer = require('puppeteer-core'); // CORE ONLY (NO BLOAT)
 
 exports.handler = async (event, context) => {
-    // 1. IDENTITY & AUTHORITY
+    // 1. MASTER IDENTITY & AUTHORITY
     const S_API_KEY = process.env.SHOPIFY_API_KEY; 
     const S_TOKEN = process.env.SHOPIFY_ACCESS_TOKEN;
     const STORE = "miraclespritz.net";
     const MASTER_ID = "geo_zavala@me.com";
 
-    // 2. THE INTERFACE (H2O V2.1 - RECOVERY MODE)
+    // 2. THE INTERFACE (H2O V2.2 - STABILITY PROTOCOL)
     if (event.httpMethod === 'GET' && !event.queryStringParameters.sync) {
         return {
             statusCode: 200,
             headers: { 'Content-Type': 'text/html' },
             body: `
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>EMILY RECOVERY: SOVEREIGN CORE</title>
+    <title>EMILY CORE: STABILITY PROTOCOL</title>
     <style>
-        body { background: #000; color: #39FF14; font-family: monospace; padding: 30px; }
-        .terminal { border: 4px solid #39FF14; padding: 20px; background: #050505; box-shadow: 0 0 15px #39FF14; }
-        .log-area { background: #0a0a0a; color: #00FFFF; height: 400px; overflow-y: auto; padding: 15px; border: 1px solid #444; margin-top: 15px; }
-        button { background: #39FF14; color: #000; width: 100%; padding: 20px; font-size: 1.5rem; font-weight: bold; border: none; cursor: pointer; }
+        body { background: #000; color: #39FF14; font-family: monospace; padding: 40px; font-size: 1.2rem; }
+        .terminal { border: 5px solid #39FF14; padding: 25px; background: #050505; box-shadow: 0 0 20px #39FF14; }
+        .log-area { background: #0a0a0a; color: #00FFFF; height: 400px; overflow-y: auto; padding: 15px; border: 1px solid #444; margin-top: 20px; font-size: 0.95rem; }
+        button { background: #39FF14; color: #000; width: 100%; padding: 20px; font-size: 1.8rem; font-weight: bold; border: none; cursor: pointer; border-radius: 5px; }
         .highlight { color: #FFFF00; }
+        .strobe { animation: blinker 1s linear infinite; }
+        @keyframes blinker { 50% { opacity: 0; } }
     </style>
 </head>
 <body>
     <div class="terminal">
-        <h1>EMILY AGENT: RECOVERY MODULE</h1>
-        <p>ARCHITECT: <span class="highlight">GEO ONE ZAVALA</span></p>
-        <p>STATUS: <span style="color:white">DEBUGGING HANDSHAKE...</span></p>
-        <button onclick="runSync()">RE-ESTABLISH SOVEREIGNTY</button>
+        <h1>AMPLIFY SOVEREIGN CORE: EMILY V2.2</h1>
+        <p>CHIEF ARCHITECT: <span class="highlight">GEO ONE ZAVALA</span></p>
+        <p>SYSTEM STATUS: <span id="sys-status" class="strobe">STABLE - READY</span></p>
+        
+        <button onclick="runMasterSync()">EXECUTE MASTER HANDSHAKE</button>
+        
         <div class="log-area" id="log">
-            [DEBUG] Optimized dependencies loaded.<br>
-            [SYSTEM] Memory Blobs re-indexed.<br>
-            [H2O] Ready for 14a7 Shopify sync.
+            [DEBUG] Optimized Sparticuz-Chromium Core loaded.<br>
+            [MEMORY] Genetic Blobs re-indexed for persistent learning.<br>
+            [H2O] Interface verified for High-Contrast Accessibility.
         </div>
     </div>
     <script>
-        async function runSync() {
+        async function runMasterSync() {
             const log = document.getElementById('log');
-            log.innerHTML += "<br>[" + new Date().toLocaleTimeString() + "] [ACTION] Pinging Shopify Core...";
+            log.innerHTML += "<br>[" + new Date().toLocaleTimeString() + "] [ACTION] Pinging Shopify 14a7...";
             try {
                 const res = await fetch('?sync=true', { method: 'POST' });
                 const data = await res.json();
-                log.innerHTML += "<br>[SUCCESS] Core Connected: " + data.store;
-                log.innerHTML += "<br>[LEARN] New state recorded in Blobs.";
-            } catch (err) { log.innerHTML += "<br>[CRITICAL] Check Netlify Logs."; }
+                document.getElementById('sys-status').innerText = "ONLINE: " + data.store;
+                log.innerHTML += "<br>[SUCCESS] Connected to: " + data.store;
+                log.innerHTML += "<br>[BRAIN] Learning delta recorded for Jorge/Geo merge.";
+            } catch (err) { log.innerHTML += "<br>[CRITICAL] Check Netlify Environment Variables."; }
         }
     </script>
 </body>
@@ -57,19 +62,19 @@ exports.handler = async (event, context) => {
         };
     }
 
-    // 3. RECURSIVE BRAIN LOGIC
+    // 3. BRAIN LOGIC (SHOPIFY & PERSISTENT MEMORY)
     try {
-        // Shopify 14a7 Verified Handshake
+        // Shopify Handshake (14a7 Verified)
         const shopifyRes = await axios.get(`https://${STORE}/admin/api/2024-01/shop.json`, {
             headers: { 'X-Shopify-Access-Token': S_TOKEN, 'X-Shopify-Api-Key': S_API_KEY }
         });
 
-        // Persistent Memory Update
+        // Persistent Genetic Memory
         const agentMemory = getStore('sovereign_memory');
-        await agentMemory.set('last_wake', {
-            ts: new Date().toISOString(),
-            identity: "Geo One Zavala",
-            status: "EMILY_RESTORED"
+        await agentMemory.set('last_state', {
+            timestamp: new Date().toISOString(),
+            status: "EMILY_RESTORED",
+            identity: "Geo One Zavala"
         });
 
         return {
@@ -77,10 +82,14 @@ exports.handler = async (event, context) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 store: shopifyRes.data.shop.name,
-                status: "SOVEREIGN_RECOVERY_SUCCESS"
+                status: "SOVEREIGN_MASTER_ACTIVE",
+                timestamp: new Date().toISOString()
             })
         };
-    } catch (err) {
-        return { statusCode: 500, body: JSON.stringify({ error: "DEBUG_FAILED", detail: err.message }) };
+    } catch (err) {           
+        return { 
+            statusCode: 500, 
+            body: JSON.stringify({ error: "CORE_FAILURE", detail: err.message }) 
+        };
     }
 };

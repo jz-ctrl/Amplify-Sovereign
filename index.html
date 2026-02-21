@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>AMPLIFY MASTER BRAIN</title>
     <style>
         body { background: #000; color: #39FF14; font-family: monospace; padding: 40px; font-size: 1.5rem; }
@@ -38,7 +37,6 @@
             log.innerHTML += "<br>[" + now + "] [ACTION] Initiating 14a7 Shopify Handshake...";
             
             try {
-                // This calls the Netlify function brain
                 const res = await fetch('/.netlify/functions/index?sync=true', { method: 'POST' });
                 const data = await res.json();
                 

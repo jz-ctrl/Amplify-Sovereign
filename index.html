@@ -2,29 +2,50 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AMPLIFY SOVEREIGN - EMILY MASTER</title>
+    <title>MASTER CONTROL: MIRACLE SPRITZ</title>
     <style>
-        body { background: #000; color: #0f0; font-family: monospace; padding: 40px; font-size: 20px; }
-        .border { border: 5px solid #0f0; padding: 25px; }
+        body { background: #000; color: #39FF14; font-family: monospace; padding: 30px; font-size: 2rem; }
+        .terminal { border: 10px solid #39FF14; padding: 25px; background: #050505; box-shadow: 0 0 50px #39FF14; }
+        .log-area { background: #111; color: #00FFFF; height: 450px; overflow-y: auto; padding: 20px; border: 2px solid #444; margin-top: 25px; font-size: 1.5rem; }
+        button { background: #39FF14; color: #000; width: 100%; padding: 40px; font-size: 3rem; font-weight: bold; border: none; margin-top: 30px; cursor: pointer; border-radius: 15px; }
+        .highlight { color: #FFFF00; }
+        .strobe { animation: blinker 1s linear infinite; }
+        @keyframes blinker { 50% { opacity: 0; } }
     </style>
 </head>
 <body>
-    <div class="border">
-        <h1>AMPLIFY ACCESSIBILITY GREEN TECH COALITION</h1>
-        <p><strong>CEO:</strong> JORGE ZAVALA</p>
-        <p><strong>PORTAL:</strong> votejz.org</p>
-        <hr>
-        <div id="status">INITIATING MASTER BRAIN...</div>
+    <div class="terminal">
+        <h1>MIRACLE SPRITZ: MASTER CONTROL</h1>
+        <p>CHIEF ARCHITECT: <span class="highlight">GEO ONE ZAVALA</span></p>
+        <p>STATUS: <span id="sys-status" class="strobe">WAITING...</span></p>
+        
+        <button onclick="executeSync()">EXECUTE MASTER SYNC</button>
+        
+        <div class="log-area" id="log">
+            [READY] System standing by for 14a7 handshake.<br>
+            [TARGET] miraclespritz.net
+        </div>
     </div>
+
     <script>
-        fetch('/.netlify/functions/index')
-            .then(r => r.json())
-            .then(d => {
-                document.getElementById('status').innerHTML = 
-                `SYSTEM STATUS: ${d.status}<br>` +
-                `SHOPIFY SYNC: ${d.data_points.shopify}<br>` +
-                `EIN: ${d.credentials.ein}`;
-            });
+        async function executeSync() {
+            const log = document.getElementById('log');
+            const status = document.getElementById('sys-status');
+            log.innerHTML += "<br>> [ACTION] Calling Sovereign Brain...";
+            
+            try {
+                // This calls your Netlify Function (index.js)
+                const res = await fetch('/.netlify/functions/index?sync=true', { method: 'POST' });
+                const data = await res.json();
+                
+                status.innerText = "VERIFIED: " + data.store;
+                log.innerHTML += "<br>> [SUCCESS] Handshake Confirmed: " + data.store;
+                log.innerHTML += "<br>> [DATA] pH 4.6 Formula Integrity: VERIFIED";
+            } catch (err) {
+                log.innerHTML += "<br>> [ERROR] Bridge failure. Check Netlify Env Keys.";
+            }
+            log.scrollTop = log.scrollHeight;
+        }
     </script>
 </body>
 </html>

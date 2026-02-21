@@ -1,51 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>MASTER CONTROL: GOOGLE 2.0</title>
-    <style>
-        body { background: #000; color: #39FF14; font-family: monospace; padding: 40px; font-size: 1.5rem; }
-        .terminal { border: 5px solid #39FF14; padding: 25px; background: #050505; }
-        .log-area { background: #111; color: #00FFFF; height: 350px; overflow-y: auto; padding: 15px; border: 1px solid #444; margin-top: 20px; font-size: 1.1rem; border-radius: 5px; }
-        button { background: #39FF14; color: #000; width: 100%; padding: 25px; font-size: 2rem; font-weight: bold; border: none; margin-top: 20px; cursor: pointer; border-radius: 5px; }
-        .highlight { color: #FFFF00; }
-        .strobe { animation: blinker 1s linear infinite; }
-        @keyframes blinker { 50% { opacity: 0; } }
-    </style>
+    <meta http-equiv="refresh" content="0; url=/.netlify/functions/index">
 </head>
-<body>
-    <div class="terminal">
-        <h1>AMPLIFY ACCESSIBILITY: MASTER CONTROL</h1>
-        <p>CHIEF ARCHITECT: <span class="highlight">GEO ONE ZAVALA</span></p>
-        <p>GOOGLE ID 2.0: <span class="highlight">ACTIVE</span></p>
-        <p>KDP EMAIL: <span class="highlight">Jz@votejz.org</span></p>
-        
-        <button onclick="executeSync()">EXECUTE SOVEREIGN SYNC</button>
-        
-        <div class="log-area" id="log">
-            [SYSTEM READY] Google 2.0 Keys Loaded.<br>
-            [NETLIFY] Environment Handshake Verified.<br>
-            [H2O] Awaiting command...
-        </div>
-    </div>
-
-    <script>
-        async function executeSync() {
-            const log = document.getElementById('log');
-            const now = new Date().toLocaleTimeString();
-            log.innerHTML += "<br>[" + now + "] [ACTION] Initiating Google 2.0 Handshake...";
-            
-            try {
-                // Calls your index.js function in Netlify
-                const res = await fetch('/.netlify/functions/index?sync=true', { method: 'POST' });
-                const data = await res.json();
-                log.innerHTML += "<br>[" + now + "] [SUCCESS] Google 2.0 / Shopify Sync Complete.";
-                log.innerHTML += "<br>[" + now + "] [DATA] Identity Verified for Jz@votejz.org";
-            } catch (err) {
-                log.innerHTML += "<br>[" + now + "] [ERROR] System Blindness. Check Netlify Variable Names.";
-            }
-            log.scrollTop = log.scrollHeight;
-        }
-    </script>
-</body>
+<body>Redirecting to Master Control...</body>
 </html>

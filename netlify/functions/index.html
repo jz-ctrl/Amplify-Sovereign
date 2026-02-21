@@ -1,30 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>AMPLIFY SOVEREIGN - EMILY MASTER</title>
-    <style>
-        body { background: #000; color: #0f0; font-family: monospace; padding: 40px; font-size: 20px; }
-        .border { border: 5px solid #0f0; padding: 25px; }
-    </style>
+    <meta http-equiv="refresh" content="0; url=/.netlify/functions/index">
 </head>
-<body>
-    <div class="border">
-        <h1>AMPLIFY ACCESSIBILITY GREEN TECH COALITION</h1>
-        <p><strong>CEO:</strong> JORGE ZAVALA</p>
-        <p><strong>PORTAL:</strong> votejz.org</p>
-        <hr>
-        <div id="status">INITIATING MASTER BRAIN...</div>
-    </div>
-    <script>
-        fetch('/.netlify/functions/index')
-            .then(r => r.json())
-            .then(d => {
-                document.getElementById('status').innerHTML = 
-                `SYSTEM STATUS: ${d.status}<br>` +
-                `SHOPIFY SYNC: ${d.data_points.shopify}<br>` +
-                `EIN: ${d.credentials.ein}`;
-            });
-    </script>
-</body>
+<body>Redirecting to Master Control...</body>
 </html>

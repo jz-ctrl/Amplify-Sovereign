@@ -1,97 +1,68 @@
+const fs = require('fs');
 const axios = require('axios');
 
-exports.handler = async (event, context) => {
-    // 1. AUTHORITY SECRETS (PULLED FROM NETLIFY ENV)
-    const S_API_KEY = process.env.SHOPIFY_API_KEY; 
-    const S_TOKEN = process.env.SHOPIFY_ACCESS_TOKEN; 
-    const STORE = "miraclespritz.net";
-    
-    // GOOGLE 2.0 & USER IDENTITY
-    const KDP_EMAIL = process.env.KDP_EMAIL;
-    const G_2_0_ID = process.env.GOOGLE_2_0_GEO_ID;
-    const G_CLIENT_ID = process.env.GOOGLE_JAYZ_CLIENT_ID;
-
-    // 2. THE INTERFACE (H2O SOVEREIGN DASHBOARD)
-    if (event.httpMethod === 'GET' && !event.queryStringParameters.sync) {
-        return {
-            statusCode: 200,
-            headers: { 'Content-Type': 'text/html' },
-            body: `
-<!DOCTYPE html>
-<html>
-<head>
-    <title>AMPLIFY MASTER BRAIN</title>
-    <style>
-        body { background: #000; color: #39FF14; font-family: monospace; padding: 40px; font-size: 1.5rem; }
-        .terminal { border: 5px solid #39FF14; padding: 25px; background: #050505; }
-        .log-area { background: #111; color: #00FFFF; height: 350px; overflow-y: auto; padding: 15px; border: 1px solid #444; margin-top: 20px; font-size: 1.1rem; border-radius: 5px; }
-        button { background: #39FF14; color: #000; width: 100%; padding: 25px; font-size: 2rem; font-weight: bold; border: none; margin-top: 20px; cursor: pointer; border-radius: 5px; }
-        .highlight { color: #FFFF00; }
-        .strobe { animation: blinker 1s linear infinite; }
-        @keyframes blinker { 50% { opacity: 0; } }
-    </style>
-</head>
-<body>
-    <div class="terminal">
-        <h1>AMPLIFY ACCESSIBILITY: MASTER CONTROL</h1>
-        <p>CHIEF ARCHITECT: <span class="highlight">GEO ONE ZAVALA</span></p>
-        <p>KDP EMAIL: <span class="highlight">\${KDP_EMAIL}</span></p>
-        <p>SYSTEM STATUS: <span id="sys-status" class="strobe">ONLINE</span></p>
-        
-        <button onclick="executeSync()">EXECUTE AUTONOMOUS SYNC</button>
-        
-        <div class="log-area" id="log">
-            [SYSTEM READY] Google 2.0 ID: \${G_2_0_ID}<br>
-            [MEMORY] Establishing continuous learning loop...<br>
-            [H2O] Interface loaded. Netlify environment verified.
-        </div>
-    </div>
-    <script>
-        async function executeSync() {
-            const log = document.getElementById('log');
-            const status = document.getElementById('sys-status');
-            const now = new Date().toLocaleTimeString();
-            log.innerHTML += "<br>[" + now + "] [ACTION] Initiating 14a7 Shopify Handshake...";
-            try {
-                const res = await fetch('?sync=true', { method: 'POST' });
-                const data = await res.json();
-                status.innerText = "SOVEREIGN VERIFIED: " + data.store;
-                log.innerHTML += "<br>[" + now + "] [SUCCESS] Connected to: " + data.store;
-                log.innerHTML += "<br>[" + now + "] [LOG] pH 4.6 Formula Integrity: VERIFIED";
-            } catch (err) {
-                log.innerHTML += "<br>[" + now + "] [ERROR] System Blindness. Check Netlify Environment Variables.";
+// Persistent memory for jz@votejz.org workspace
+class AutonomousBrain {
+    constructor() {
+        this.memoryPath = './brain_state.json';
+        this.config = {
+            miracle_spritz: {
+                domain: "miraclespritz.net",
+                apiKey: process.env.SHOPIFY_KEY_MIRACLE,
+                token: process.env.SHOPIFY_TOKEN_MIRACLE,
+                formula: "pH 4.6",
+                log: "spritz_audit.log"
+            },
+            secondary_site: {
+                domain: "americasbest.shop", // Placeholder for your 2nd key
+                apiKey: process.env.SHOPIFY_KEY_SECONDARY,
+                token: process.env.SHOPIFY_TOKEN_SECONDARY,
+                log: "secondary_audit.log"
             }
-            log.scrollTop = log.scrollHeight;
+        };
+        this.state = this.initMemory();
+    }
+
+    initMemory() {
+        if (fs.existsSync(this.memoryPath)) {
+            return JSON.parse(fs.readFileSync(this.memoryPath, 'utf8'));
         }
-    </script>
-</body>
-</html>`
-        };
+        return { miracle_spritz: { last_order: null }, secondary_site: { last_order: null } };
     }
 
-    // 3. BRAIN LOGIC (EXECUTION)
-    try {
-        const shopifyRes = await axios.get(\`https://\${STORE}/admin/api/2024-01/shop.json\`, {
-            headers: { 
-                'X-Shopify-Access-Token': S_TOKEN, 
-                'X-Shopify-Api-Key': S_API_KEY 
+    async synchronize(siteKey) {
+        const site = this.config[siteKey];
+        console.log(`[AUTONOMOUS] Syncing ${site.domain}...`);
+
+        try {
+            const res = await axios.get(`https://${site.domain}/admin/api/2024-01/orders.json?limit=4`, {
+                headers: { 'X-Shopify-Access-Token': site.token }
+            });
+
+            const latestOrders = res.data.orders;
+            
+            // Continuous Learning: Compare new data with stored state
+            if (latestOrders[0].id !== this.state[siteKey].last_order) {
+                this.executeFulfillment(siteKey, latestOrders[0]);
+                this.state[siteKey].last_order = latestOrders[0].id;
+                this.saveState();
             }
-        });
-
-        return {
-            statusCode: 200,
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                store: shopifyRes.data.shop.name,
-                owner: "Geo One Zavala",
-                status: "SOVEREIGN_MASTER_ACTIVE",
-                timestamp: new Date().toISOString()
-            })
-        };
-    } catch (err) {
-        return { 
-            statusCode: 500, 
-            body: JSON.stringify({ error: "BRAIN_FAILURE", detail: err.message }) 
-        };
+            
+            return latestOrders;
+        } catch (err) {
+            console.error(`[CRITICAL] Sync failure for ${siteKey}:`, err.message);
+        }
     }
-};
+
+    executeFulfillment(siteKey, order) {
+        // Autonomous execution based on your specific requirements
+        console.log(`[EXECUTE] Processing Order ${order.name} for ${siteKey}`);
+        // Add specific logistics logic here (Label gen, etc.)
+    }
+
+    saveState() {
+        fs.writeFileSync(this.memoryPath, JSON.stringify(this.state, null, 2));
+    }
+}
+
+module.exports = new AutonomousBrain();

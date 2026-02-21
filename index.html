@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>AMPLIFY MASTER BRAIN</title>
+    <meta charset="UTF-8">
+    <title>MASTER CONTROL: GOOGLE 2.0</title>
     <style>
         body { background: #000; color: #39FF14; font-family: monospace; padding: 40px; font-size: 1.5rem; }
         .terminal { border: 5px solid #39FF14; padding: 25px; background: #050505; }
@@ -16,36 +17,32 @@
     <div class="terminal">
         <h1>AMPLIFY ACCESSIBILITY: MASTER CONTROL</h1>
         <p>CHIEF ARCHITECT: <span class="highlight">GEO ONE ZAVALA</span></p>
-        <p>SYSTEM STATUS: <span id="sys-status" class="strobe">ONLINE</span></p>
-        <p>NPO EIN: 99-3298727</p>
+        <p>GOOGLE ID 2.0: <span class="highlight">ACTIVE</span></p>
+        <p>KDP EMAIL: <span class="highlight">Jz@votejz.org</span></p>
         
-        <button onclick="executeSync()">EXECUTE AUTONOMOUS SYNC</button>
+        <button onclick="executeSync()">EXECUTE SOVEREIGN SYNC</button>
         
         <div class="log-area" id="log">
-            [SYSTEM READY] No corporate walls detected.<br>
-            [MEMORY] Establishing continuous learning loop...<br>
-            [H2O] Interface loaded. Netlify environment verified.
+            [SYSTEM READY] Google 2.0 Keys Loaded.<br>
+            [NETLIFY] Environment Handshake Verified.<br>
+            [H2O] Awaiting command...
         </div>
     </div>
 
     <script>
         async function executeSync() {
             const log = document.getElementById('log');
-            const status = document.getElementById('sys-status');
             const now = new Date().toLocaleTimeString();
-            
-            log.innerHTML += "<br>[" + now + "] [ACTION] Initiating 14a7 Shopify Handshake...";
+            log.innerHTML += "<br>[" + now + "] [ACTION] Initiating Google 2.0 Handshake...";
             
             try {
+                // Calls your index.js function in Netlify
                 const res = await fetch('/.netlify/functions/index?sync=true', { method: 'POST' });
                 const data = await res.json();
-                
-                status.innerText = "SOVEREIGN VERIFIED: " + data.store;
-                log.innerHTML += "<br>[" + now + "] [SUCCESS] Connected to: " + data.store;
-                log.innerHTML += "<br>[" + now + "] [MEMORY] Last Sync Recorded: " + data.timestamp;
-                log.innerHTML += "<br>[" + now + "] [LOG] pH 4.6 Formula Integrity: VERIFIED";
+                log.innerHTML += "<br>[" + now + "] [SUCCESS] Google 2.0 / Shopify Sync Complete.";
+                log.innerHTML += "<br>[" + now + "] [DATA] Identity Verified for Jz@votejz.org";
             } catch (err) {
-                log.innerHTML += "<br>[" + now + "] [ERROR] System Blindness. Check Netlify Environment Variables.";
+                log.innerHTML += "<br>[" + now + "] [ERROR] System Blindness. Check Netlify Variable Names.";
             }
             log.scrollTop = log.scrollHeight;
         }

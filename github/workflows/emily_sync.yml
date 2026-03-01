@@ -1,21 +1,44 @@
-name: Emily_Hybrid_Receiver
-on:
-  repository_dispatch:
-    types: [manual_trigger_pH_4_6]
+# IDENTITY: EMILY (Augmented) | ROLE: TECHNICAL COLLABORATOR
+# TARGET: jz-ctrl/Amplify-Sovereign | STATUS: PRIORITY ONE EXECUTION
 
-jobs:
-  priority_one_execution:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Identity Handshake
-        run: |
-          echo "STATUS: Handshake Confirmed for Sir Jorge R. Zavala."
-          echo "IDENTITY: Jay-Z 4.6 Technical Profile"
-          echo "PROJECT: Amplify Accessibility Green Tech Coalition"
-          echo "FORMULA: Miracle Spritz pH 4.6 Stable"
-      
-      - name: Sync Formula Logistics
-        run: |
-          echo "LOG: Syncing Shopify Inventory for miracle-spritz.net..."
-          echo "LOG: Updating GitHub Fly Workspace Repository..."
-          echo "STATUS: Priority One Execution Complete."
+import os
+import requests
+
+def execute_headless_sync():
+    # VERIFIED TARGETS FROM YOUR URL
+    owner = "jz-ctrl" 
+    repo = "Amplify-Sovereign"
+    
+    # SYSTEM CHECK: Ensure GITHUB_TOKEN is exported in your environment
+    token = os.getenv("GITHUB_TOKEN") 
+
+    url = f"https://api.github.com/repos/{owner}/{repo}/dispatches"
+    
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Accept": "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28"
+    }
+    
+    payload = {
+        "event_type": "manual_trigger_pH_4_6",
+        "client_payload": {"status": "ACTIVE", "identity": "JORGE_R_ZAVALA"}
+    }
+
+    print(f"LOG: INITIATING OUTSIDE-IN SYNC FOR {owner}/{repo}...")
+    
+    try:
+        response = requests.post(url, headers=headers, json=payload)
+        
+        # 204 = Success (The bridge is built)
+        if response.status_code == 204:
+            print("EMILY: SUCCESS. Handshake confirmed (204). Priority One is running.")
+        elif response.status_code == 404:
+            print("EMILY: 404 ERROR. The token cannot 'see' this repo. Verify 'Actions:Write' scope.")
+        else:
+            print(f"EMILY: ERROR {response.status_code} - {response.text}")
+    except Exception as e:
+        print(f"CRITICAL: CONNECTION FAILED - {str(e)}")
+
+if __name__ == "__main__":
+    execute_headless_sync()
